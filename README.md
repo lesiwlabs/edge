@@ -1,8 +1,8 @@
 # lesiwlabs edge compute
 
-This is a Go WASM project that manages redirects for @lesiw’s domains. It uses
-the [`workers`][workers] library to glue together Go’s `net/http` handlers and
-CloudFlare’s worker API.
+This is a Go WASM project that manages redirects for [@lesiw][lesiw]’s domains.
+It uses the [`workers`][workers] library to glue together Go’s `net/http`
+handlers and CloudFlare’s worker API.
 
 By building this project in Go, it trades some slight overhead for portability
 between CloudFlare and other edge compute services that are capable of running
@@ -38,5 +38,6 @@ $ curl -X POST -d "test message" http://localhost:8787/echo
 test message
 ```
 
+[lesiw]: https://github.com/lesiw
 [workers]: https://github.com/syumai/workers
 [template]: https://github.com/syumai/workers/tree/main/_templates/cloudflare/worker-tinygo
