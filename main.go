@@ -7,19 +7,20 @@ import (
 	"github.com/syumai/workers"
 )
 
-type AnySubdomain struct {
-	handlers map[string]http.HandlerFunc
+var redirects = map[string]string{
+	"chrislesiw.com":        "https://www.linkedin.com/in/christopher-lesiw/",
+	"chrislesiw.com/github": "https://github.com/lesiw",
+
+	"lesiw.io/inter": "https://github.com/lesiw/inter",
 }
 
-func (h *AnySubdomain) HandleFunc(pattern string, handler http.HandlerFunc) {
-	h.handlers[pattern] = handler
-}
+type RedirectHandler struct{}
 
-func (h *AnySubdomain) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	for pattern, handler := range h.handlers {
+func (h *RedirectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	for pattern, redirect := range redirects {
 		host, path, _ := strings.Cut(pattern, "/")
 		if stripSubdomain(r.URL.Host) == host && r.URL.Path == "/"+path {
-			handler(w, r)
+			http.Redirect(w, r, redirect, http.StatusTemporaryRedirect)
 			return
 		}
 	}
@@ -35,13 +36,5 @@ func stripSubdomain(url string) string {
 }
 
 func main() {
-	hdl := &AnySubdomain{handlers: make(map[string]http.HandlerFunc)}
-	hdl.HandleFunc("chrislesiw.com", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "https://www.linkedin.com/in/christopher-lesiw/",
-			http.StatusTemporaryRedirect)
-	})
-	hdl.HandleFunc("chrislesiw.com/github", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "https://github.com/lesiw", http.StatusTemporaryRedirect)
-	})
-	workers.Serve(hdl)
+	workers.Serve(&RedirectHandler{})
 }
