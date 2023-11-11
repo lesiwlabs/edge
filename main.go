@@ -17,7 +17,7 @@ var redirects = map[string]string{
 type RedirectHandler struct{}
 
 func (h *RedirectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	key := stripSubdomain(r.URL.Host) + r.URL.Path
+	key := domain(r.URL.Host) + r.URL.Path
 	key = strings.TrimSuffix(key, "/")
 	target, ok := redirects[key]
 	if !ok {
@@ -31,12 +31,14 @@ func (h *RedirectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, target, http.StatusTemporaryRedirect)
 }
 
-func stripSubdomain(url string) string {
+func domain(url string) string {
 	parts := strings.Split(url, ".")
-	if len(parts) > 2 {
-		return strings.Join(parts[1:], ".")
+	if len(parts) < 1 {
+		return ""
+	} else if len(parts) < 2 {
+		return parts[0]
 	}
-	return url
+	return strings.Join(parts[len(parts)-2:], ".")
 }
 
 func main() {
