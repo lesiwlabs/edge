@@ -13,7 +13,8 @@ var gogetTpl = `<html>
 <body>
 go get %[1]s
 </body>
-</html>`
+</html>
+`
 
 func goget(w http.ResponseWriter, pattern, redirect string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
