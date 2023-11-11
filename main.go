@@ -7,28 +7,36 @@ import (
 	"github.com/syumai/workers"
 )
 
-var redirects = map[string]string{
-	"chrislesiw.com":        "https://www.linkedin.com/in/christopher-lesiw/",
-	"chrislesiw.com/github": "https://github.com/lesiw",
-
-	"lesiw.io/inter": "https://github.com/lesiw/inter",
+type handler struct{}
+type target interface {
+	handleRequest(http.ResponseWriter, *http.Request)
 }
 
-type Handler struct{}
+var targets = map[string]target{
+	"chrislesiw.com":        &url{"https://www.linkedin.com/in/christopher-lesiw/"},
+	"chrislesiw.com/github": &url{"https://github.com/lesiw"},
 
-func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	"lesiw.io/inter": &ghGoPkg{
+		app: "inter",
+		pkg: "lesiw.io/inter",
+		src: "https://github.com/lesiw/inter",
+	},
+	"lesiw.io/bump": &ghGoPkg{
+		app: "bump",
+		pkg: "lesiw.io/bump",
+		src: "https://github.com/lesiw/bump",
+	},
+}
+
+func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	key := domain(r.URL.Host) + r.URL.Path
 	key = strings.TrimSuffix(key, "/")
-	target, ok := redirects[key]
+	target, ok := targets[key]
 	if !ok {
 		http.NotFound(w, r)
 		return
 	}
-	if r.URL.Query().Get("go-get") == "1" {
-		goget(w, key, target)
-		return
-	}
-	http.Redirect(w, r, target, http.StatusTemporaryRedirect)
+	target.handleRequest(w, r)
 }
 
 func domain(url string) string {
@@ -43,5 +51,5 @@ func domain(url string) string {
 }
 
 func main() {
-	workers.Serve(&Handler{})
+	workers.Serve(&handler{})
 }
