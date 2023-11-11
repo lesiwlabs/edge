@@ -14,9 +14,9 @@ var redirects = map[string]string{
 	"lesiw.io/inter": "https://github.com/lesiw/inter",
 }
 
-type RedirectHandler struct{}
+type Handler struct{}
 
-func (h *RedirectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	key := domain(r.URL.Host) + r.URL.Path
 	key = strings.TrimSuffix(key, "/")
 	target, ok := redirects[key]
@@ -42,5 +42,5 @@ func domain(url string) string {
 }
 
 func main() {
-	workers.Serve(&RedirectHandler{})
+	workers.Serve(&Handler{})
 }
