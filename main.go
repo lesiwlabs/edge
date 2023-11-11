@@ -20,6 +20,10 @@ func (h *RedirectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	for pattern, redirect := range redirects {
 		host, path, _ := strings.Cut(pattern, "/")
 		if stripSubdomain(r.URL.Host) == host && r.URL.Path == "/"+path {
+			if r.URL.Query().Get("go-get") == "1" {
+				goget(w, pattern, redirect)
+				return
+			}
 			http.Redirect(w, r, redirect, http.StatusTemporaryRedirect)
 			return
 		}
