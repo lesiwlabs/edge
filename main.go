@@ -33,12 +33,13 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func domain(url string) string {
 	parts := strings.Split(url, ".")
-	if len(parts) < 1 {
-		return ""
-	} else if len(parts) < 2 {
+	if len(parts) > 1 {
+		return strings.Join(parts[len(parts)-2:], ".")
+	} else if len(parts) > 0 {
 		return parts[0]
+	} else {
+		return ""
 	}
-	return strings.Join(parts[len(parts)-2:], ".")
 }
 
 func main() {
