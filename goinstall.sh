@@ -48,9 +48,9 @@ then
     esac
     if [ "$(id -u)" = "0" ]
     then
-        echo "  PATH=\"$INSTALL_DIR:\$PATH\""
+        >&2 echo "  PATH=\"$INSTALL_DIR:\$PATH\""
     else
-        echo "  PATH=\"\$HOME/.local/bin:\$PATH\""
+        >&2 echo "  PATH=\"\$HOME/.local/bin:\$PATH\""
     fi
 fi
 
