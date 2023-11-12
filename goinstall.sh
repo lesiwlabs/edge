@@ -21,6 +21,12 @@ then
     exit 1
 fi
 
+if ! mkdir -p "$INSTALL_DIR"
+then
+    >&2 echo "Failed to mkdir \"$INSTALL_DIR\"; do you have permissions?"
+    exit 1
+fi
+
 if ! install -m 755 "$TEMP" "$INSTALL_DIR/$APP"
 then
     >&2 echo "Failed to install $APP; do you have write permissions for $INSTALL_DIR?"
