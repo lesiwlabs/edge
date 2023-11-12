@@ -52,7 +52,6 @@ then
     else
         echo "  PATH=\"\$HOME/.local/bin:\$PATH\""
     fi
-    exit 1
 fi
 
 echo "$INSTALL_DIR/$APP"
