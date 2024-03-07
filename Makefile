@@ -2,7 +2,7 @@ unexport GOFLAGS
 
 .PHONY: dev
 dev:
-	wrangler dev
+	npx wrangler dev
 
 .PHONY: build
 build:
@@ -18,4 +18,4 @@ build:
 
 .PHONY: deploy
 deploy:
-	wrangler deploy
+	npx wrangler deploy
