@@ -35,6 +35,8 @@ var targets = map[string]target{
 	"lesiw.dev":         &url{"https://github.com/lesiw"},
 	"lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
 	"lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
+
+	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
