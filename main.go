@@ -31,6 +31,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/buzzybox",
 		src: "https://github.com/lesiw/buzzybox",
 	},
+
+	"lesiw.dev":         &url{"https://github.com/lesiw"},
+	"lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
+	"lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
