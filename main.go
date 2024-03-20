@@ -21,15 +21,20 @@ var targets = map[string]target{
 		pkg: "lesiw.io/bump",
 		src: "https://github.com/lesiw/bump",
 	},
-	"lesiw.io/inter": &ghGoPkg{
-		app: "inter",
-		pkg: "lesiw.io/inter",
-		src: "https://github.com/lesiw/inter",
-	},
 	"lesiw.io/buzzybox": &ghGoPkg{
 		app: "buzzybox",
 		pkg: "lesiw.io/buzzybox",
 		src: "https://github.com/lesiw/buzzybox",
+	},
+	"lesiw.io/gx": &ghGoPkg{
+		app: "gx",
+		pkg: "lesiw.io/gx",
+		src: "https://github.com/lesiw/gx",
+	},
+	"lesiw.io/inter": &ghGoPkg{
+		app: "inter",
+		pkg: "lesiw.io/inter",
+		src: "https://github.com/lesiw/inter",
 	},
 
 	"lesiw.dev":         &url{"https://github.com/lesiw"},
