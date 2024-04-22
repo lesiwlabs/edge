@@ -33,7 +33,8 @@ func (p *ghGoPkg) handleRequest(w http.ResponseWriter, r *http.Request) {
 		p.get(w)
 		return
 	}
-	if strings.Contains(r.UserAgent(), "curl") {
+	ua := strings.ToLower(r.UserAgent())
+	if strings.Contains(ua, "curl") || strings.Contains(ua, "wget") {
 		p.install(w)
 		return
 	}
