@@ -61,6 +61,11 @@ var targets = map[string]target{
 		pkg: "lesiw.io/run",
 		src: "https://github.com/lesiw/run",
 	},
+	"lesiw.io/smol": &ghGoPkg{
+		app: "smol",
+		pkg: "lesiw.io/smol",
+		src: "https://github.com/lesiw/smol",
+	},
 
 	"lesiw.dev":         &url{"https://github.com/lesiw"},
 	"lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
