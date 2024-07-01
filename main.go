@@ -51,6 +51,11 @@ var targets = map[string]target{
 		pkg: "lesiw.io/inter",
 		src: "https://github.com/lesiw/inter",
 	},
+	"lesiw.io/plain": &ghGoPkg{
+		app: "repo",
+		pkg: "lesiw.io/plain",
+		src: "https://github.com/lesiw/plain",
+	},
 	"lesiw.io/repo": &ghGoPkg{
 		app: "repo",
 		pkg: "lesiw.io/repo",
