@@ -16,67 +16,67 @@ var targets = map[string]target{
 	"chrislesiw.com":        &url{"https://www.linkedin.com/in/christopher-lesiw/"},
 	"chrislesiw.com/github": &url{"https://github.com/lesiw"},
 
-	"lesiw.io/bump": &ghGoPkg{
+	"lesiw.io/bump": &gopkg{
 		app: "bump",
 		pkg: "lesiw.io/bump",
 		src: "https://github.com/lesiw/bump",
 	},
-	"lesiw.io/buzzybox": &ghGoPkg{
+	"lesiw.io/buzzybox": &gopkg{
 		app: "buzzybox",
 		pkg: "lesiw.io/buzzybox",
 		src: "https://github.com/lesiw/buzzybox",
 	},
-	"lesiw.io/ci": &ghGoPkg{
+	"lesiw.io/ci": &gopkg{
 		app: "ci",
 		pkg: "lesiw.io/ci",
 		src: "https://github.com/lesiw/ci",
 	},
-	"lesiw.io/cmdio": &ghGoPkg{
+	"lesiw.io/cmdio": &gopkg{
 		pkg: "lesiw.io/cmdio",
 		src: "https://github.com/lesiw/cmdio",
 	},
-	"lesiw.io/ctrctl": &ghGoPkg{
+	"lesiw.io/ctrctl": &gopkg{
 		pkg: "lesiw.io/ctrctl",
 		src: "https://github.com/lesiw/ctrctl",
 	},
-	"lesiw.io/dataer": &ghGoPkg{
+	"lesiw.io/dataer": &gopkg{
 		app: "dataer",
 		pkg: "lesiw.io/dataer",
 		src: "https://github.com/lesiw/dataer",
 	},
-	"lesiw.io/defers": &ghGoPkg{
+	"lesiw.io/defers": &gopkg{
 		pkg: "lesiw.io/defers",
 		src: "https://github.com/lesiw/defers",
 	},
-	"lesiw.io/flag": &ghGoPkg{
+	"lesiw.io/flag": &gopkg{
 		pkg: "lesiw.io/flag",
 		src: "https://github.com/lesiw/flag",
 	},
-	"lesiw.io/hue": &ghGoPkg{
+	"lesiw.io/hue": &gopkg{
 		app: "hue",
 		pkg: "lesiw.io/hue",
 		src: "https://github.com/lesiw/hue",
 	},
-	"lesiw.io/inter": &ghGoPkg{
+	"lesiw.io/inter": &gopkg{
 		app: "inter",
 		pkg: "lesiw.io/inter",
 		src: "https://github.com/lesiw/inter",
 	},
-	"lesiw.io/plain": &ghGoPkg{
+	"lesiw.io/plain": &gopkg{
 		pkg: "lesiw.io/plain",
 		src: "https://github.com/lesiw/plain",
 	},
-	"lesiw.io/repo": &ghGoPkg{
+	"lesiw.io/repo": &gopkg{
 		app: "repo",
 		pkg: "lesiw.io/repo",
 		src: "https://github.com/lesiw/repo",
 	},
-	"lesiw.io/run": &ghGoPkg{
+	"lesiw.io/run": &gopkg{
 		app: "run",
 		pkg: "lesiw.io/run",
 		src: "https://github.com/lesiw/run",
 	},
-	"lesiw.io/smol": &ghGoPkg{
+	"lesiw.io/smol": &gopkg{
 		pkg: "lesiw.io/smol",
 		src: "https://github.com/lesiw/smol",
 	},

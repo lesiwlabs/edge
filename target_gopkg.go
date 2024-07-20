@@ -8,7 +8,7 @@ import (
 	_ "embed"
 )
 
-type ghGoPkg struct {
+type gopkg struct {
 	app string
 	pkg string
 	src string
@@ -28,7 +28,7 @@ go get %[1]s
 </html>
 `
 
-func (p *ghGoPkg) handleRequest(w http.ResponseWriter, r *http.Request) {
+func (p *gopkg) handleRequest(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("go-get") == "1" {
 		p.get(w)
 		return
@@ -41,12 +41,12 @@ func (p *ghGoPkg) handleRequest(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, p.src, http.StatusTemporaryRedirect)
 }
 
-func (p *ghGoPkg) get(w http.ResponseWriter) {
+func (p *gopkg) get(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Write([]byte(fmt.Sprintf(gogetTpl, p.pkg, p.src)))
 }
 
-func (p *ghGoPkg) install(w http.ResponseWriter) {
+func (p *gopkg) install(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 	script := expandenv(installScript, map[string]string{
 		"APP":        p.app,
