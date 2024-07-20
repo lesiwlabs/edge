@@ -32,12 +32,10 @@ var targets = map[string]target{
 		src: "https://github.com/lesiw/ci",
 	},
 	"lesiw.io/cmdio": &ghGoPkg{
-		app: "cmdio",
 		pkg: "lesiw.io/cmdio",
 		src: "https://github.com/lesiw/cmdio",
 	},
 	"lesiw.io/ctrctl": &ghGoPkg{
-		app: "ctrctl",
 		pkg: "lesiw.io/ctrctl",
 		src: "https://github.com/lesiw/ctrctl",
 	},
@@ -47,12 +45,10 @@ var targets = map[string]target{
 		src: "https://github.com/lesiw/dataer",
 	},
 	"lesiw.io/defers": &ghGoPkg{
-		app: "defers",
 		pkg: "lesiw.io/defers",
 		src: "https://github.com/lesiw/defers",
 	},
 	"lesiw.io/flag": &ghGoPkg{
-		app: "flag",
 		pkg: "lesiw.io/flag",
 		src: "https://github.com/lesiw/flag",
 	},
@@ -67,7 +63,6 @@ var targets = map[string]target{
 		src: "https://github.com/lesiw/inter",
 	},
 	"lesiw.io/plain": &ghGoPkg{
-		app: "repo",
 		pkg: "lesiw.io/plain",
 		src: "https://github.com/lesiw/plain",
 	},
@@ -82,7 +77,6 @@ var targets = map[string]target{
 		src: "https://github.com/lesiw/run",
 	},
 	"lesiw.io/smol": &ghGoPkg{
-		app: "smol",
 		pkg: "lesiw.io/smol",
 		src: "https://github.com/lesiw/smol",
 	},
