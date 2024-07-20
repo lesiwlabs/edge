@@ -86,10 +86,15 @@ var targets = map[string]target{
 	"lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
 
 	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
+
+	"labs.lesiw.io/edge": &gopkg{
+		pkg: "labs.lesiw.io/edge",
+		src: "https://github.com/lesiwlabs/edge",
+	},
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	key := domain(r.URL.Host) + r.URL.Path
+	key := strings.TrimPrefix(r.URL.Host, "www.") + r.URL.Path
 	key = strings.TrimSuffix(key, "/")
 	target, ok := targets[key]
 	if !ok {
@@ -97,17 +102,6 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	target.handleRequest(w, r)
-}
-
-func domain(url string) string {
-	parts := strings.Split(url, ".")
-	if len(parts) > 1 {
-		return strings.Join(parts[len(parts)-2:], ".")
-	} else if len(parts) > 0 {
-		return parts[0]
-	} else {
-		return ""
-	}
 }
 
 func main() {
