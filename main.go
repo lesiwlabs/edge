@@ -91,6 +91,10 @@ var targets = map[string]target{
 
 	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
 
+	"labs.lesiw.io/ci": &gopkg{
+		pkg: "labs.lesiw.io/ci",
+		src: "https://github.com/lesiwlabs/ci",
+	},
 	"labs.lesiw.io/edge": &gopkg{
 		pkg: "labs.lesiw.io/edge",
 		src: "https://github.com/lesiwlabs/edge",
