@@ -26,10 +26,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/buzzybox",
 		src: "https://github.com/lesiw/buzzybox",
 	},
-	"lesiw.io/ci": &gopkg{
-		app: "ci",
-		pkg: "lesiw.io/ci",
-		src: "https://github.com/lesiw/ci",
+	"lesiw.io/ops": &gopkg{
+		app: "op",
+		pkg: "lesiw.io/ops",
+		src: "https://github.com/lesiw/ops",
 	},
 	"lesiw.io/clerk": &gopkg{
 		pkg: "lesiw.io/clerk",
@@ -91,9 +91,9 @@ var targets = map[string]target{
 
 	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
 
-	"labs.lesiw.io/ci": &gopkg{
-		pkg: "labs.lesiw.io/ci",
-		src: "https://github.com/lesiwlabs/ci",
+	"labs.lesiw.io/ops": &gopkg{
+		pkg: "labs.lesiw.io/ops",
+		src: "https://github.com/lesiwlabs/ops",
 	},
 	"labs.lesiw.io/edge": &gopkg{
 		pkg: "labs.lesiw.io/edge",
