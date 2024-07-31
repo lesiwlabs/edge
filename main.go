@@ -26,11 +26,6 @@ var targets = map[string]target{
 		pkg: "lesiw.io/buzzybox",
 		src: "https://github.com/lesiw/buzzybox",
 	},
-	"lesiw.io/ops": &gopkg{
-		app: "op",
-		pkg: "lesiw.io/ops",
-		src: "https://github.com/lesiw/ops",
-	},
 	"lesiw.io/clerk": &gopkg{
 		pkg: "lesiw.io/clerk",
 		src: "https://github.com/lesiw/clerk",
@@ -65,6 +60,16 @@ var targets = map[string]target{
 		app: "inter",
 		pkg: "lesiw.io/inter",
 		src: "https://github.com/lesiw/inter",
+	},
+	"lesiw.io/moxie": &gopkg{
+		app: "moxie",
+		pkg: "lesiw.io/moxie",
+		src: "https://github.com/lesiw/moxie",
+	},
+	"lesiw.io/ops": &gopkg{
+		app: "op",
+		pkg: "lesiw.io/ops",
+		src: "https://github.com/lesiw/ops",
 	},
 	"lesiw.io/plain": &gopkg{
 		pkg: "lesiw.io/plain",
