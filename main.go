@@ -90,6 +90,8 @@ var targets = map[string]target{
 		src: "https://github.com/lesiw/smol",
 	},
 
+	"lesiw.io/talks": &url{"https://github.com/lesiw/talks"},
+
 	"lesiw.dev":         &url{"https://github.com/lesiw"},
 	"lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
 	"lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
