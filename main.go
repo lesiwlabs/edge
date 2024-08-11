@@ -66,8 +66,14 @@ var targets = map[string]target{
 		pkg: "lesiw.io/moxie",
 		src: "https://github.com/lesiw/moxie",
 	},
+	"lesiw.io/op": &gopkg{
+		app: "op",
+		pkg: "lesiw.io/op",
+		src: "https://github.com/lesiw/op",
+	},
 	"lesiw.io/ops": &gopkg{
 		app: "op",
+		bin: "https://github.com/lesiw/op",
 		pkg: "lesiw.io/ops",
 		src: "https://github.com/lesiw/ops",
 	},

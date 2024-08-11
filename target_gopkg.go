@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cmp"
 	"fmt"
 	"net/http"
 	"strings"
@@ -10,6 +11,7 @@ import (
 
 type gopkg struct {
 	app string
+	bin string
 	pkg string
 	src string
 }
@@ -50,7 +52,7 @@ func (p *gopkg) install(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 	script := expandenv(installScript, map[string]string{
 		"APP":        p.app,
-		"BIN_URL":    p.src + "/releases/latest/download",
+		"BIN_URL":    cmp.Or(p.bin, p.src) + "/releases/latest/download",
 		"TICKET_URL": p.src + "/issues",
 	})
 	w.Write([]byte(script))
