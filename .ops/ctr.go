@@ -28,12 +28,11 @@ func bldctr() string {
 		return ctrimg
 	}
 
-	uname := rnr.MustGet("uname", "-m").Out
-
 	ctrid := rnr.MustGet("docker", "run", "-d", "-i", "node:22", "cat").Out
 	defer rnr.Run("docker", "rm", "-f", ctrid)
 
 	bld := sub.WithRunner(rnr, "docker", "exec", "-i", ctrid)
+	uname := bld.MustGet("uname", "-m").Out
 
 	bld.MustRun("npx", "--yes", "wrangler", "--version")
 	bld.MustRun("wget", "-O", "/tmp/go.tar.gz",
