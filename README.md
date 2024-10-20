@@ -11,33 +11,6 @@ moving from one service to another, but the core logic will remain the same.
 
 This project was generated from the [worker-tinygo template][template].
 
-## Requirements
-
-- [wrangler](https://developers.cloudflare.com/workers/wrangler/)
-- tinygo 0.29.0 or later
-
-## Development
-
-### Commands
-
-```
-make dev     # run dev server
-make build   # build Go Wasm binary
-make deploy  # deploy worker
-```
-
-### Testing dev server
-
-```
-$ curl http://localhost:8787/hello
-Hello!
-```
-
-```
-$ curl -X POST -d "test message" http://localhost:8787/echo
-test message
-```
-
 [lesiw]: https://github.com/lesiw
 [workers]: https://github.com/syumai/workers
 [template]: https://github.com/syumai/workers/tree/main/_templates/cloudflare/worker-tinygo
