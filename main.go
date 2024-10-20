@@ -99,6 +99,11 @@ var targets = map[string]target{
 		pkg: "lesiw.io/smol",
 		src: "https://github.com/lesiw/smol",
 	},
+	"lesiw.io/spkez": &gopkg{
+		app: "spkez",
+		pkg: "lesiw.io/spkez",
+		src: "https://github.com/lesiw/spkez",
+	},
 
 	"lesiw.io/talks": &url{"https://github.com/lesiw/talks"},
 
