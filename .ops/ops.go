@@ -5,13 +5,14 @@ import (
 	"sync"
 
 	"labs.lesiw.io/ops/git"
+	"labs.lesiw.io/ops/github"
 	"lesiw.io/cmdio"
 	"lesiw.io/cmdio/ctr"
 	"lesiw.io/cmdio/sys"
 	"lesiw.io/ops"
 )
 
-type Ops struct{}
+type Ops struct{ github.Ops }
 
 var rnr *cmdio.Runner
 var secrets = map[string]string{
@@ -22,7 +23,13 @@ func main() {
 	if len(os.Args) < 2 {
 		os.Args = append(os.Args, "build")
 	}
-	rnr = mustv(ctr.New(bldctr()))
+	github.Repo = "lesiwlabs/edge"
+	github.Secrets = secrets
+	if os.Args[1] == "secrets" {
+		rnr = sys.Runner()
+	} else {
+		rnr = mustv(ctr.New(bldctr()))
+	}
 	git.CopyWorktree(rnr, sys.Runner())
 	ops.Defer(func() { _ = rnr.Close() })
 
