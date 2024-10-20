@@ -121,6 +121,7 @@ var targets = map[string]target{
 		pkg: "labs.lesiw.io/edge",
 		src: "https://github.com/lesiwlabs/edge",
 	},
+	"labs.lesiw.io/pass": &url{"https://github.com/lesiwlabs/pass"},
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
