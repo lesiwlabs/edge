@@ -55,6 +55,11 @@ var targets = map[string]target{
 		pkg: "lesiw.io/flag",
 		src: "https://github.com/lesiw/flag",
 	},
+	"lesiw.io/gofi": &gopkg{
+		app: "gofi",
+		pkg: "lesiw.io/gofi",
+		src: "https://github.com/lesiw/gofi",
+	},
 	"lesiw.io/http2https": &gopkg{
 		pkg: "lesiw.io/http2https",
 		src: "https://github.com/lesiw/http2https",
