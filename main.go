@@ -51,6 +51,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/defers",
 		src: "https://github.com/lesiw/defers",
 	},
+	"lesiw.io/fill": &gopkg{
+		pkg: "lesiw.io/fill",
+		src: "https://github.com/lesiw/fill",
+	},
 	"lesiw.io/flag": &gopkg{
 		pkg: "lesiw.io/flag",
 		src: "https://github.com/lesiw/flag",
