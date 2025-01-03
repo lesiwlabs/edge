@@ -4,3 +4,6 @@ compatibility_date = "2022-05-13"
 compatibility_flags = [
     "streams_enable_constructors"
 ]
+[observability]
+enabled = true
+head_sampling_rate = 1
