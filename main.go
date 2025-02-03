@@ -26,6 +26,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/buzzybox",
 		src: "https://github.com/lesiw/buzzybox",
 	},
+	"lesiw.io/chrono": &gopkg{
+		pkg: "lesiw.io/chrono",
+		src: "https://github.com/lesiw/chrono",
+	},
 	"lesiw.io/clerk": &gopkg{
 		pkg: "lesiw.io/clerk",
 		src: "https://github.com/lesiw/clerk",
