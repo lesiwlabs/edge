@@ -143,6 +143,7 @@ var targets = map[string]target{
 		pkg: "labs.lesiw.io/edge",
 		src: "https://github.com/lesiwlabs/edge",
 	},
+	"labs.lesiw.io/k8s":  &url{"https://github.com/lesiwlabs/k8s"},
 	"labs.lesiw.io/pass": &url{"https://github.com/lesiwlabs/pass"},
 }
 
