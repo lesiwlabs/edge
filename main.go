@@ -133,10 +133,6 @@ var targets = map[string]target{
 	"lesiw.io/datastax": &url{"https://github.com/lesiw/datastax"},
 	"lesiw.io/talks":    &url{"https://github.com/lesiw/talks"},
 
-	"lesiw.dev":         &url{"https://github.com/lesiw"},
-	"lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
-	"lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
-
 	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
 
 	"labs.lesiw.io/echo": &url{"https://github.com/lesiwlabs/echo"},
@@ -150,6 +146,10 @@ var targets = map[string]target{
 		src: "https://github.com/lesiwlabs/ops",
 	},
 	"labs.lesiw.io/pass": &url{"https://github.com/lesiwlabs/pass"},
+
+	"origin.lesiw.dev":         &url{"https://github.com/lesiw"},
+	"origin.lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
+	"origin.lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
