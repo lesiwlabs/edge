@@ -135,7 +135,12 @@ var targets = map[string]target{
 
 	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
 
-	"labs.lesiw.io/echo": &url{"https://github.com/lesiwlabs/echo"},
+	"labs.lesiw.io/ctr": &gopkg{
+		pkg: "labs.lesiw.io/ctr",
+		src: "https://github.com/lesiwlabs/ctr",
+	},
+	"labs.lesiw.io/discord": &url{"https://github.com/lesiwlabs/discord"},
+	"labs.lesiw.io/echo":    &url{"https://github.com/lesiwlabs/echo"},
 	"labs.lesiw.io/edge": &gopkg{
 		pkg: "labs.lesiw.io/edge",
 		src: "https://github.com/lesiwlabs/edge",
