@@ -159,6 +159,13 @@ var targets = map[string]target{
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if strings.HasPrefix(r.URL.Host, "www.") {
+		http.Redirect(w, r,
+			"https://"+strings.TrimPrefix(r.URL.Host, "www.")+r.URL.Path,
+			http.StatusMovedPermanently,
+		)
+		return
+	}
 	key := strings.TrimPrefix(r.URL.Host, "www.") + r.URL.Path
 	key = strings.TrimSuffix(key, "/")
 	target, ok := targets[key]
