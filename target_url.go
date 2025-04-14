@@ -2,10 +2,8 @@ package main
 
 import "net/http"
 
-type url struct {
-	target string
-}
+type url string
 
-func (u *url) handleRequest(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, u.target, http.StatusTemporaryRedirect)
+func (u url) handleRequest(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, string(u), http.StatusTemporaryRedirect)
 }

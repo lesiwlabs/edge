@@ -13,8 +13,8 @@ type target interface {
 }
 
 var targets = map[string]target{
-	"chrislesiw.com":        &url{"https://www.linkedin.com/in/christopher-lesiw/"},
-	"chrislesiw.com/github": &url{"https://github.com/lesiw"},
+	"chrislesiw.com":        url("https://www.linkedin.com/in/christopher-lesiw/"),
+	"chrislesiw.com/github": url("https://github.com/lesiw"),
 
 	"lesiw.io/bump": &gopkg{
 		app: "bump",
@@ -130,32 +130,32 @@ var targets = map[string]target{
 		src: "https://github.com/lesiw/testdetect",
 	},
 
-	"lesiw.io/datastax": &url{"https://github.com/lesiw/datastax"},
-	"lesiw.io/talks":    &url{"https://github.com/lesiw/talks"},
+	"lesiw.io/datastax": url("https://github.com/lesiw/datastax"),
+	"lesiw.io/talks":    url("https://github.com/lesiw/talks"),
 
-	"lesiw.chat": &url{"https://discord.gg/EYWxqssV99"},
+	"lesiw.chat": url("https://discord.gg/EYWxqssV99"),
 
 	"labs.lesiw.io/ctr": &gopkg{
 		pkg: "labs.lesiw.io/ctr",
 		src: "https://github.com/lesiwlabs/ctr",
 	},
-	"labs.lesiw.io/discord": &url{"https://github.com/lesiwlabs/discord"},
-	"labs.lesiw.io/echo":    &url{"https://github.com/lesiwlabs/echo"},
+	"labs.lesiw.io/discord": url("https://github.com/lesiwlabs/discord"),
+	"labs.lesiw.io/echo":    url("https://github.com/lesiwlabs/echo"),
 	"labs.lesiw.io/edge": &gopkg{
 		pkg: "labs.lesiw.io/edge",
 		src: "https://github.com/lesiwlabs/edge",
 	},
-	"labs.lesiw.io/feed": &url{"https://github.com/lesiwlabs/feed"},
-	"labs.lesiw.io/k8s":  &url{"https://github.com/lesiwlabs/k8s"},
+	"labs.lesiw.io/feed": url("https://github.com/lesiwlabs/feed"),
+	"labs.lesiw.io/k8s":  url("https://github.com/lesiwlabs/k8s"),
 	"labs.lesiw.io/ops": &gopkg{
 		pkg: "labs.lesiw.io/ops",
 		src: "https://github.com/lesiwlabs/ops",
 	},
-	"labs.lesiw.io/pass": &url{"https://github.com/lesiwlabs/pass"},
+	"labs.lesiw.io/pass": url("https://github.com/lesiwlabs/pass"),
 
-	"origin.lesiw.dev":         &url{"https://github.com/lesiw"},
-	"origin.lesiw.dev/discord": &url{"https://discord.gg/EYWxqssV99"},
-	"origin.lesiw.dev/twitch":  &url{"https://twitch.tv/lesiwlabs"},
+	"origin.lesiw.dev":         url("https://github.com/lesiw"),
+	"origin.lesiw.dev/discord": url("https://discord.gg/EYWxqssV99"),
+	"origin.lesiw.dev/twitch":  url("https://twitch.tv/lesiwlabs"),
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
