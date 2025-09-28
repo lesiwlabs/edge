@@ -142,6 +142,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/testdetect",
 		src: "https://github.com/lesiw/testdetect",
 	},
+	"lesiw.io/tidytypes": &gopkg{
+		pkg: "lesiw.io/tidytypes",
+		src: "https://github.com/lesiw/tidytypes",
+	},
 	"lesiw.io/zync": &gopkg{
 		pkg: "lesiw.io/zync",
 		src: "https://github.com/lesiw/zync",
