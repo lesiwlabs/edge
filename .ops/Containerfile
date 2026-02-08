@@ -1,0 +1,22 @@
+FROM node:22
+
+ARG TARGETARCH
+
+# Install wrangler.
+RUN npx --yes wrangler --version
+
+# Install Go.
+RUN wget -O /tmp/go.tar.gz \
+        "https://go.dev/dl/go1.23.2.linux-${TARGETARCH}.tar.gz" \
+    && tar -C /usr/local -xzf /tmp/go.tar.gz \
+    && rm /tmp/go.tar.gz
+
+ENV PATH="${PATH}:/usr/local/go/bin"
+
+# Install TinyGo.
+RUN wget -O /tmp/tinygo.deb \
+        "https://github.com/tinygo-org/tinygo/releases/download/v0.33.0/tinygo_0.33.0_${TARGETARCH}.deb" \
+    && dpkg -i /tmp/tinygo.deb \
+    && rm /tmp/tinygo.deb
+
+WORKDIR /work
