@@ -139,6 +139,15 @@ var targets = map[string]target{
 		pkg: "lesiw.io/prefix",
 		src: "https://github.com/lesiw/prefix",
 	},
+	"lesiw.io/proc": &gopkg{
+		pkg: "lesiw.io/proc",
+		src: "https://github.com/lesiw/proc",
+	},
+	"lesiw.io/proc/procvet": &gopkg{
+		app: "procvet",
+		pkg: "lesiw.io/proc/procvet",
+		src: "https://github.com/lesiw/proc",
+	},
 	"lesiw.io/repo": &gopkg{
 		app: "repo",
 		pkg: "lesiw.io/repo",
