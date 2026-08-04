@@ -46,13 +46,13 @@ var targets = map[string]target{
 		pkg: "lesiw.io/cmdio",
 		src: "https://github.com/lesiw/cmdio",
 	},
-	"lesiw.io/ctxname": &gopkg{
-		pkg: "lesiw.io/ctxname",
-		src: "https://github.com/lesiw/ctxname",
-	},
 	"lesiw.io/ctxguard": &gopkg{
 		pkg: "lesiw.io/ctxguard",
 		src: "https://github.com/lesiw/ctxguard",
+	},
+	"lesiw.io/ctxname": &gopkg{
+		pkg: "lesiw.io/ctxname",
+		src: "https://github.com/lesiw/ctxname",
 	},
 	"lesiw.io/cmdio/x/busybox": &gopkg{
 		pkg: "lesiw.io/cmdio/x/busybox",
