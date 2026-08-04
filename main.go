@@ -203,6 +203,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/tidytypes",
 		src: "https://github.com/lesiw/tidytypes",
 	},
+	"lesiw.io/timeafter": &gopkg{
+		pkg: "lesiw.io/timeafter",
+		src: "https://github.com/lesiw/timeafter",
+	},
 	"lesiw.io/tools": &gopkg{
 		pkg: "lesiw.io/tools",
 		src: "https://github.com/lesiw/tools",
