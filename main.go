@@ -122,6 +122,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/linelen",
 		src: "https://github.com/lesiw/linelen",
 	},
+	"lesiw.io/linewrap": &gopkg{
+		pkg: "lesiw.io/linewrap",
+		src: "https://github.com/lesiw/linewrap",
+	},
 	"lesiw.io/lintchecker": &gopkg{
 		pkg: "lesiw.io/lintchecker",
 		src: "https://github.com/lesiw/lintchecker",
