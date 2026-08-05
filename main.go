@@ -174,6 +174,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/run",
 		src: "https://github.com/lesiw/run",
 	},
+	"lesiw.io/singlefield": &gopkg{
+		pkg: "lesiw.io/singlefield",
+		src: "https://github.com/lesiw/singlefield",
+	},
 	"lesiw.io/smol": &gopkg{
 		pkg: "lesiw.io/smol",
 		src: "https://github.com/lesiw/smol",
