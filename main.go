@@ -199,6 +199,10 @@ var targets = map[string]target{
 		pkg: "lesiw.io/step",
 		src: "https://github.com/lesiw/step",
 	},
+	"lesiw.io/strictvar": &gopkg{
+		pkg: "lesiw.io/strictvar",
+		src: "https://github.com/lesiw/strictvar",
+	},
 	"lesiw.io/testcmp": &gopkg{
 		pkg: "lesiw.io/testcmp",
 		src: "https://github.com/lesiw/testcmp",
