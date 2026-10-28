@@ -1,0 +1,281 @@
+Perfection is achieved, not when there is nothing more to add, but when there
+is nothing left to take away. - Antoine de Saint-Exupéry
+
+The primary cost of software is maintenance. Code review, therefore, should be
+performed with the goal of simplifying and reducing code and prose wherever
+possible. A change should only pass once it has reached its irreducible form.
+
+Code review does not stop at code. Documentation, commit messages, pull request
+descriptions, patches, and metadata are equally within scope. All text should
+be considered and examined under these same principles.
+
+Findings exist at every scale. A concept, file, or dependency may be as
+unnecessary as a function, branch, or variable.
+
+Engage with code as text. A source file is read in order, one line at a time,
+by people who did not write it, and it is judged the way any other writing is
+judged: by whether the reader reaches the end with the right understanding. The
+compiler is a reader, and the least demanding one. The document comes first and
+the mechanism second, which is why layout, naming, and the placement of a
+comment are findings, not taste.
+
+Information flows left to right, top to bottom. Use the inverted pyramid. The
+first information should always be the main idea. In a commit message, that is
+the subject line. In code, that is the first thing a reader would expect to see
+when opening a file. For example, a file called foo.go should open with the Foo
+type definition and not an arbitrary set of constants or helper functions. A
+file defining a periodic process should begin with the definition of that
+periodic process. A file defining a CLI should begin with its usage string and
+flags. The most salient information comes first.
+
+Consider the reader. What will they have access to? What will they find
+important? References to files which are excluded from public view, such as
+.gitignored files, .git/info/excluded files, or files outside of the
+repository, must be flagged for removal. If a reader cannot reference
+something, it is a witness mark that must be removed.
+
+Less is exponentially more. Expansion is only permitted if substantial
+information would otherwise be lost. As a test, consider whether removing a
+sentence, paragraph, comment, or line of code would have an impact on the
+actual information being communicated. If the answer is no, it must be removed.
+
+All indirection - abstractions, modules, even variables themselves - has a
+readability cost. If that indirection makes code simpler to write, simpler to
+read, and simpler to maintain, then paying that cost is worthwhile. But
+useless, speculative, or cargo-cult indirection should be removed.
+
+Keep elements near where they are used. Avoid declaring a constant only to
+invoke it dozens of lines away. Understanding a file should not require
+cross-referencing a completely different part of the tree.
+
+Prefer duplication to the wrong abstraction. Duplication is local and visible.
+A wrong abstraction spreads with subtle consequences. Beware of a shared
+routine accumulating parameters and conditional paths to serve its callers.
+Where the wrong abstraction already exists, inline it back into every caller
+and let the duplication show what the right shape is.
+
+Projects should be self-consistent. If there is already an established way of
+solving a problem - a package, idiom, or method already in use elsewhere -
+solve it that same way.
+
+Treat every component of a project as a part of the whole: a name is a
+description, a comment is an explanation, a test is a set of expected
+observables, a commit message is a canonical history. Much of a review is
+finding the pairs of descriptions that cannot both be true. If two elements
+disagree, this is a finding.
+
+Express things as simply as possible, but no simpler. The default stance should
+be removal, but subtle or unintuitive mechanisms may genuinely require some
+breathing room for explanation. Take, for example, Go's sync.Once.Do, a
+function that is more comment than code, because the function has a subtle
+contract that might otherwise be misunderstood.
+
+    func (o *Once) Do(f func()) {
+        // Note: Here is an incorrect implementation of Do:
+        //
+        //    if o.done.CompareAndSwap(false, true) {
+        //        f()
+        //    }
+        //
+        // Do guarantees that when it returns, f has finished.
+        // This implementation would not implement that guarantee:
+        // given two simultaneous calls, the winner of the cas would
+        // call f, and the second would return immediately, without
+        // waiting for the first's call of f to complete.
+        // This is why the slow path falls back to a mutex, and why
+        // the o.done.Store must be delayed until after f returns.
+
+        if !o.done.Load() {
+            // Outlined slow-path to allow inlining of the fast-path.
+            o.doSlow(f)
+        }
+    }
+
+Consider comments and code to be one continuous piece of prose. A reader moves
+top to bottom through both, so put each comment immediately before the code it
+explains, in the order that code is needed, and phrase it as the next step of
+one explanation rather than a bolted-on annotation.
+
+Names carry weight wherever they appear: variables, functions, types, files,
+packages, flags, tables, environment variables. Prefer short but precise names
+to long ones. The smallest scopes should have the shortest names. Prefer c to
+lineCount. Prefer i to sliceIndex.
+
+Use symmetry to convey information. Readers naturally pattern-match, so keep
+similar things looking similar. Arbitrary differences are naturally
+attention-catching.
+
+    // The second branch looks like an afterthought, so it reads as one.
+    if _, ok := m[k]; ok {
+        return true
+    }
+    _, ok := m["_"+k]
+    return ok
+
+    // Both conditions are the same kind of test, so they look the same.
+    if _, ok := m[k]; ok {
+        return true
+    }
+    if _, ok := m["_"+k]; ok {
+        return true
+    }
+    return false
+
+Use groupings to convey information. A neutral group is bin-packed with no
+widows or orphans. If one or more arguments are singled out, they must have a
+semantic reason.
+
+    // A call in which no arguments are singled out,
+    // the arguments cannot fit in one line (forcing wrapping),
+    // and the lines are kept relatively even.
+    f(
+        "foo", "bar", "biz", "baz", "zip", "qux", "quux", "corge",
+        "garply", "waldo", "fred", "plugh", "xyzzy", "thud",
+    )
+
+    // A Go context being held separately from other arguments.
+    funcContext(ctx,
+        "https://example.com", map[string]string{"User-Agent": "Go net/http"},
+    )
+
+    // A fsys from the io/fs package, where fsys is a stand-in for a receiver.
+    fs.Stat(fsys,
+        "/some/very/long/path/that/prevents/this/call/from/being/one/line",
+    )
+
+    // A command where the code highlights the package list.
+    cmd := exec.Command("apt-get", "install", "-y",
+        "pkg1",
+        "pkg2",
+    )
+
+This applies to function calls, type definitions, logs, files, tables, and
+bulleted lists alike. Group like changes together in a git commit. Group
+similar ideas together in prose, documentation, and source files. Grouping
+holds at every scale: arguments in a call, declarations in a file, files in a
+package, and the program itself. The program's group is the default one,
+holding whatever has not been put anywhere else.
+
+Global state is not an anti-pattern: it is that default group. Sometimes global
+state is the simplest way to express an idea. For example, a Go program
+representing an HTTP server will idiomatically register its routes using the
+global net/http namespace, since no other server will share its binary. Using
+global namespaces in this way reduces noise and is honest about the scope of
+the program. Be suspicious of types which exist only to hold global state; ask
+whether they should be promoted to package-level values instead.
+
+It is not enough to read and reason through a code change; the code must also
+be exercised. The preferred way of doing so is using an appropriate test
+framework. Changes that cannot be tested cannot be verified.
+
+Tests should be tight in scope. Make use of test seams to ensure only the
+relevant code is under test in each case. Do not test third-party packages
+(though testing whether code is compliant with a third-party implementation is
+permitted). If a language has a unit-test-only feature, such as Go's -short
+flag, the duration of that entire test suite should be seconds, not minutes.
+
+Beware of code that is "correct by coincidence." Sometimes the only reason a
+test passes is because of an arbitrary buffer size, wait time, or something
+specific about the environment in which it is running. Temporal correctness is
+especially insidious, and can appear at any scale, including tests. If
+something only works because of a sleep, it needs reconsideration; if tests
+simulate time by using actual wall-clock time, that test is broken.
+
+Test suites should be heavy in unit tests, light in integration tests.
+Integration tests are expensive: their combinatorics are unfavorable, and they
+cost time and processing power. Integration tests should be kept to a minimum
+and typically cover the happy cases.
+
+Tests are one way of establishing authorial intent, and by far the preferable
+way since their intent can be mechanically checked against the state of the
+code. The remaining gaps are covered by prose: documentation, commit messages,
+comments.
+
+Prose should be written in the imperative with a neutral yet clear tone. Its
+primary job is to communicate the remaining information that could not be
+communicated through code and tests, and it should be concise, understated, and
+jargon-free.
+
+Do not give inanimate things agency. Only a person asks, wants, decides,
+prefers, or insists. Keep verbs of representation, which are usually
+unavoidable: a name describes, a bound costs, a test establishes. Drop verbs of
+desire and decision unless they are deliberately chosen to provide emphasis.
+
+If the project does not otherwise specify, assume American English, Chicago
+style. It is a finding when it slips. Be mindful also of per-language style
+choices: for example, Go uses canceled, not cancelled, despite both being valid
+American spellings.
+
+If the project does not otherwise specify, write commit messages in the Linux
+kernel style. The subject should be 72 columns or less, no trailing period,
+stating what changed. Commits may begin with an optional "component:" such as
+"net/http: make persistConn strictly HTTP/1". A commit body is optional and
+should be wrapped to 80 columns, if present. If the diff is understandable from
+the subject line alone, leave it. Only add a body if additional detail is
+required. If a diff was produced by running a single command, such as "gofmt -w
+-r 'interface{} -> any' src", that command should stand alone as a subject line
+and contain no body.
+
+The rest of this document describes one method of approaching a review, running
+from the largest thing to the smallest: the language, then the project, then
+the change itself.
+
+Establish a baseline before judging anything, starting with the language.
+Languages and their communities can evolve rapidly; do not assume you know or
+remember every detail. Read the changelogs and release notes since the last
+version you remember, and read curiously about new packages, new spellings of
+common idioms, and new tooling: analyzers, test facilities, generators. Prefer
+official resources: official release notes, official style guidance, official
+blogs, official wikis, official language specifications.
+
+Next, learn about the project. Read the design artifacts before beginning a
+review: a README, a file of agent instructions, a design document, a .design
+meta-directory, a test corpus with explanatory comments, explanations of subtle
+choices in the git log. These may contain invariants or design constraints that
+you would otherwise be unaware of.
+
+Then read the change in its entirety. Read the commits oldest to newest, with
+their diffs, from the branch point:
+
+    git --no-pager log --reverse -p <base>..HEAD
+
+Omit the range when there is no branch point, as with an initial commit or a
+repository whose whole history is under review. On older versions of git, add
+--root so that the first commit prints with its diff.
+
+Then descend. Work from the whole to the part: a concept, then a symbol, then a
+branch, then a comment. High findings supersede low ones, so there is not much
+use in a line-by-line critique of a module that should be deleted wholesale.
+
+At each level, list and defend every element. Begin at the concept level: could
+a whole namespace, table, type, protocol, supervisor, state machine, or
+dependency go? Walk the full inventory and defend each against the invariants.
+Be especially skeptical of additional public surface, which carries a heavy
+maintenance cost; flag anything which would break an existing public interface
+that has no documented rationale. No is temporary, yes is forever.
+
+Then the symbol level: fields, parameters, returns, enums, types, constants,
+helper functions, named intermediates. Do these add clarity or contribute
+noise? Every additional named thing adds conceptual complexity for maintainers.
+A helper whose body is shorter than its call shape does not provide clarity; it
+confuses vocabulary. Be skeptical of emergent domain-specific languages: ask if
+the indirection is worth the cost.
+
+Then the branch level: redundant && clauses, dead code paths, error handling
+for situations which are impossible by construction.
+
+Finally, code comments and documentation. Do not use comments to compensate for
+unclear code: rename, extract, or restructure before deciding one is necessary.
+A comment should only exist if it is public documentation, or if the code to
+which it refers cannot be made clearer. Comments should be complete sentences
+that end with a period.
+
+Once the change has settled, return to the narrative laid out by the commit
+history. Is it self-contradictory? Is one commit a revert of another? Are the
+commit messages clear? Is the order logical? Does each change stand alone as a
+potentially revertible unit? Is the project buildable, testable, and
+understandable at every commit?
+
+Until a change has landed in a shared branch, its history is mutable. Take full
+advantage of this and establish a clear, concise, and contradiction-free
+narrative before the change joins the project's immutable historical log.

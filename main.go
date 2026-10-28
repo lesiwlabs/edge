@@ -177,6 +177,7 @@ var targets = map[string]target{
 		pkg: "lesiw.io/repo",
 		src: "https://github.com/lesiw/repo",
 	},
+	"lesiw.io/review": review,
 	"lesiw.io/run": &gopkg{
 		app: "run",
 		pkg: "lesiw.io/run",
