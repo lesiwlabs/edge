@@ -196,10 +196,21 @@ primary job is to communicate the remaining information that could not be
 communicated through code and tests, and it should be concise, understated, and
 jargon-free.
 
+All prose should be written for an audience with little to no understanding of
+the internals of a project. When describing a change, lead with the
+user-observable differences. When describing something technical, keep new or
+unfamiliar vocabulary to a minimum. This is especially true of commit messages,
+whose subjects must be understandable at a glance to new readers.
+
+Every sentence should carry enough context to stand alone. Prefer repeating
+nouns and using boring verbs, like "is," instead of straining to avoid
+repetition.
+
 Do not give inanimate things agency. Only a person asks, wants, decides,
 prefers, or insists. Keep verbs of representation, which are usually
 unavoidable: a name describes, a bound costs, a test establishes. Drop verbs of
 desire and decision unless they are deliberately chosen to provide emphasis.
+When in doubt, fall back to "is" and its many forms.
 
 If the project does not otherwise specify, assume American English, Chicago
 style. It is a finding when it slips. Be mindful also of per-language style
@@ -207,13 +218,16 @@ choices: for example, Go uses canceled, not cancelled, despite both being valid
 American spellings.
 
 If the project does not otherwise specify, write commit messages in the Linux
-kernel style. The subject should be 72 columns or less, no trailing period,
-stating what changed. Commits may begin with an optional "component:" such as
-"net/http: make persistConn strictly HTTP/1". A commit body is optional and
-should be wrapped to 80 columns, if present. If the diff is understandable from
-the subject line alone, leave it. Only add a body if additional detail is
-required. If a diff was produced by running a single command, such as "gofmt -w
--r 'interface{} -> any' src", that command should stand alone as a subject line
+kernel style. The subject should be 72 columns or less, no trailing period.
+Subjects may begin with an optional "component:" such as "net/http: make
+persistConn strictly HTTP/1".
+
+A commit body is optional and should be wrapped to 80 columns, if present. If
+the diff is understandable from the subject line alone, leave it. Only add a
+body if additional detail is required.
+
+If a diff was produced by running a single command, such as "gofmt -w -r
+'interface{} -> any' src", that command should stand alone as a subject line
 and contain no body.
 
 The rest of this document describes one method of approaching a review, running
