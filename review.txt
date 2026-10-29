@@ -218,9 +218,9 @@ choices: for example, Go uses canceled, not cancelled, despite both being valid
 American spellings.
 
 If the project does not otherwise specify, write commit messages in the Linux
-kernel style. The subject should be 72 columns or less, no trailing period.
-Subjects may begin with an optional "component:" such as "net/http: make
-persistConn strictly HTTP/1".
+kernel style. The subject should be 72 columns or less, no trailing period, and
+should begin with a capital letter. Subjects may begin with an optional
+"component:" such as "net/http: Make persistConn strictly HTTP/1".
 
 A commit body is optional and should be wrapped to 80 columns, if present. If
 the diff is understandable from the subject line alone, leave it. Only add a
