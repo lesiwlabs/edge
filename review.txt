@@ -193,24 +193,26 @@ comments.
 
 Prose should be written in the imperative with a neutral yet clear tone. Its
 primary job is to communicate the remaining information that could not be
-communicated through code and tests, and it should be concise, understated, and
-jargon-free.
+communicated through code and tests.
 
-All prose should be written for an audience with little to no understanding of
-the internals of a project. When describing a change, lead with the
-user-observable differences. When describing something technical, keep new or
-unfamiliar vocabulary to a minimum. This is especially true of commit messages,
-whose subjects must be understandable at a glance to new readers.
+Permit prose, especially comments, only as a last resort. Always prefer making
+names, tests, and code clearer to accepting unnecessary prose. Code is the
+most accurate way of conveying information, and it does not depend on the
+reader's natural language. Code that stands on its own needs no comment; one
+added to it is noise.
 
-Every sentence should carry enough context to stand alone. Prefer repeating
-nouns and using boring verbs, like "is," instead of straining to avoid
-repetition.
+Each sentence should be short. Each sentence should use common sentence
+structure. Uncommon sentence structure is difficult to read, draws attention
+and emphasis to the sentence, and may not translate well to other languages.
+Most vocabulary should be Basic English and jargon-free.
 
-Do not give inanimate things agency. Only a person asks, wants, decides,
-prefers, or insists. Keep verbs of representation, which are usually
-unavoidable: a name describes, a bound costs, a test establishes. Drop verbs of
-desire and decision unless they are deliberately chosen to provide emphasis.
-When in doubt, fall back to "is" and its many forms.
+Every sentence should carry enough context to stand alone. Prefer repetition,
+straightforwardness, and clarity over novelty.
+
+When describing a program, function, symbol, or change, lead with its
+observable behavior. Keep unfamiliar and technical vocabulary to a minimum.
+This is especially true of commit messages, whose subjects must be
+understandable at a glance to new readers.
 
 If the project does not otherwise specify, assume American English, Chicago
 style. It is a finding when it slips. Be mindful also of per-language style
