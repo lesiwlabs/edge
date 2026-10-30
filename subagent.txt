@@ -1,0 +1,190 @@
+Running a second agent with no shared context
+
+A review is worth more when the reviewer has not seen the reasoning that
+produced the change. When the harness you are in has no subagent support of its
+own, you can still get one: put an agent in a terminal multiplexer, hand it a
+prompt, and wait for it to finish.
+
+The multiplexer only provides a terminal. It is not the source of truth about
+progress, and scraping the screen is the weakest way to learn what happened. An
+agent that keeps a session log tells you directly: while it works, the log
+grows, and when the turn ends the log records a completed message. Watch the
+log, and the same procedure works in tmux, in screen, in zellij, or with no
+multiplexer at all.
+
+The procedure
+
+1. Make a run directory and write the prompt to a file inside it. Keep the
+   prompt out of the command line and out of the keystrokes. Keystrokes are
+   capped in length, and a prompt with newlines submits at the first one.
+
+2. Start the agent with a session path you choose, so that finding the log is
+   not a matter of guessing where it went:
+
+       pi --session "$run/session.jsonl"
+
+3. Type a one-line pointer to the prompt file, not the prompt itself:
+
+       Read /path/to/prompt.txt and carry it out. Do not ask questions.
+
+4. Wait until the prompt is recorded before waiting for the answer. A keystroke
+   that arrived while the agent was still drawing its interface is lost, and
+   the wait that follows never ends. The log gains a user message when the
+   prompt lands; if it does not appear, send it again.
+
+5. Wait for the turn to end. In pi's log the last record becomes a message whose
+   role is assistant and whose stopReason is stop. That is the only reliable
+   finished signal. A sentinel printed to the screen scrolls out of the visible
+   window, and a quiet screen looks exactly like a thinking one.
+
+6. Stop on any of four conditions, not only success: done, the agent exited, no
+   change for the stall window, or the deadline. Report which one fired, and
+   leave the session up so a human can look.
+
+7. Read the last assistant message out of the log.
+
+The script
+
+    #!/bin/sh
+    # subagent.sh RUN_DIR PROMPT_FILE
+    set -eu
+    run=${1:?usage: subagent.sh RUN_DIR PROMPT_FILE}
+    prompt=${2:?usage: subagent.sh RUN_DIR PROMPT_FILE}
+    sess="subagent-$(basename "$run" | tr -c 'A-Za-z0-9_-' '-')"
+    state="$run/session.jsonl"
+    deadline=$(( $(date +%s) + ${SUBAGENT_TIMEOUT:-7200} ))
+    stall=$(( ${SUBAGENT_STALL:-900} ))
+    poll=${SUBAGENT_POLL:-5}
+
+    last_record() { [ -s "$state" ] && tail -1 "$state" 2>/dev/null || true; }
+    has() { printf '%s' "$1" | grep -q -- "$2"; }
+    turn_started() { has "$(last_record)" '"role":"user"'; }
+    turn_done() { r=$(last_record); has "$r" '"role":"assistant"' &&
+        has "$r" '"stopReason":"stop"'; }
+    pane_dead() { [ "$(tmux display-message -p -t "$sess" '#{pane_dead}' \
+        2>/dev/null)" = 1 ]; }
+    fingerprint() { printf '%s:%s' "$(wc -c < "$state" 2>/dev/null || echo 0)" \
+        "$(tmux capture-pane -t "$sess" -p 2>/dev/null | cksum)"; }
+
+    submit() {
+        tmux send-keys -t "$sess" C-u
+        tmux send-keys -t "$sess" -l \
+            "Read $prompt and carry it out. Do not ask questions."
+        tmux send-keys -t "$sess" Enter
+    }
+
+    tmux kill-session -t "$sess" 2>/dev/null || true
+    tmux new-session -d -s "$sess" -c "$run" "pi --session $state"
+    tmux set-option -t "$sess" remain-on-exit on
+    sleep 1
+    submit
+
+    tries=0
+    until turn_started; do
+        tries=$((tries + 1))
+        [ "$tries" -ge 30 ] &&
+            { echo "failed: prompt not accepted" >&2; exit 2; }
+        [ "$tries" -eq 15 ] && submit
+        sleep 1
+    done
+
+    prev=$(fingerprint); prev_at=$(date +%s)
+    while :; do
+        now=$(date +%s)
+        if turn_done; then echo "done"; break; fi
+        if pane_dead; then echo "exited"; break; fi
+        cur=$(fingerprint)
+        if [ "$cur" != "$prev" ]; then prev=$cur; prev_at=$now; fi
+        if [ $((now - prev_at)) -ge "$stall" ]; then echo "stalled"; break; fi
+        if [ "$now" -ge "$deadline" ]; then echo "timeout"; break; fi
+        sleep "$poll"
+    done
+    echo "session: tmux attach -t $sess"
+
+Why no bare sleeps
+
+A sleep before acting assumes an amount of time, and the assumption is wrong in
+both directions. Too short, and the next step types into a half-drawn interface
+or reads a log that does not exist yet. Too long, and every run pays it for
+nothing. Each wait above is a condition with a deadline instead: the log gains a
+user message, or the log gains a finished message, or the pane dies. The one
+sleep left is the interval between polls, which is unavoidable and is not the
+same thing.
+
+Stall detection
+
+Two things have to stand still before a run counts as stalled: the size of the
+log and the contents of the pane. A working agent animates, so one changed
+character is enough to prove life, and the pair standing still means it is
+thinking hard, waiting for a human, or wedged. Ten to fifteen minutes is a
+reasonable window. A false stall costs one look at the pane; no stall detection
+costs the caller the rest of the day.
+
+Other multiplexers
+
+The verbs differ and the logic does not. What you need from the multiplexer is
+a way to start a process with a terminal, a way to type into it, a way to read
+the visible screen, and a way to kill it.
+
+    tmux    start   tmux new-session -d -s NAME -c DIR 'CMD'
+            type    tmux send-keys -t NAME -l 'TEXT'
+                    tmux send-keys -t NAME Enter
+            read    tmux capture-pane -t NAME -p
+            alive   tmux display-message -p -t NAME '#{pane_dead}'
+            stop    tmux kill-session -t NAME
+
+    screen  start   screen -dmS NAME CMD
+            type    screen -S NAME -X stuff 'TEXT\r'
+            read    screen -S NAME -X hardcopy OUT
+            alive   screen -ls | grep NAME
+            stop    screen -S NAME -X quit
+
+    zellij  start   zellij attach --create-background NAME
+            type    zellij --session NAME action write-chars 'TEXT'
+            read    zellij --session NAME action dump-screen OUT
+            alive   zellij list-sessions
+            stop    zellij kill-session NAME
+
+Only the tmux column is tested here. The screen commands are the documented
+equivalents on a 2006 build, where hardcopy and quit work but stuff did not
+deliver in a session started with -dmS; check that the typed text actually
+arrives before trusting the rest. The detection logic is the same in every case,
+because it reads the agent's log and not the screen.
+
+If there is no multiplexer at all, the agent can be run non-interactively with
+its input from the prompt file:
+
+    pi -p --session "$run/session.jsonl" < "$prompt" > "$run/out" 2>&1
+
+That prints nothing until the turn ends, so it gives you no way to tell a slow
+run from a stuck one. It is fine for short work and poor for a long review.
+
+Prior art
+
+- depesz, "Wait for program(s) in tmux panes to end" (2019). The
+  tmux_wait_for_many script waits for a pane's last non-empty line to match a
+  regular expression. It works, and it depends on the shell prompt being
+  recognizable.
+- kau.sh, "Forking subagents in an AI coding session with tmux". A bash spawner
+  for parallel worker agents, with the same send-keys ritual.
+- kaushikgopal's tmux-subagent gist. The same idea kept agent-agnostic, for
+  codex, claude, and gemini-cli.
+- pi-task's completion detection, which combines "process monitoring (tmux
+  panes) and session log analysis". The closest prior art, and the same
+  conclusion: the log is the signal and the pane is the view.
+- tmux wait-for is the built-in primitive for blocking one client until another
+  signals. It synchronizes tmux clients, not processes, so it does not replace
+  the log check.
+
+Failure modes
+
+- Keystrokes are capped, so a long prompt is silently truncated. Send a pointer
+  to a file.
+- A prompt containing newlines submits at the first one. Keep the pointer on
+  one line.
+- An agent that stops to ask a question looks exactly like a stall. Either
+  forbid questions in the pointer or attach and answer.
+- An agent that crashes leaves a dead pane rather than an error. That is what
+  remain-on-exit and the pane_dead check are for.
+- A stalled run is not a failed run. Leave the session up, report the condition,
+  and let a human decide whether to resume or restart.

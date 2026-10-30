@@ -95,6 +95,7 @@ var targets = map[string]target{
 		pkg: "lesiw.io/fs",
 		src: "https://github.com/lesiw/fs",
 	},
+	"lesiw.io/go.txt": doc("go.txt"),
 	"lesiw.io/gorc": &gopkg{
 		pkg: "lesiw.io/gorc",
 		src: "https://github.com/lesiw/gorc",
@@ -126,6 +127,7 @@ var targets = map[string]target{
 		pkg: "lesiw.io/linewrap",
 		src: "https://github.com/lesiw/linewrap",
 	},
+	"lesiw.io/llms.txt": doc("llms.txt"),
 	"lesiw.io/lintchecker": &gopkg{
 		pkg: "lesiw.io/lintchecker",
 		src: "https://github.com/lesiw/lintchecker",
@@ -177,7 +179,8 @@ var targets = map[string]target{
 		pkg: "lesiw.io/repo",
 		src: "https://github.com/lesiw/repo",
 	},
-	"lesiw.io/review": review,
+	"lesiw.io/review":     moved("https://lesiw.io/review.txt"),
+	"lesiw.io/review.txt": doc("review.txt"),
 	"lesiw.io/run": &gopkg{
 		app: "run",
 		pkg: "lesiw.io/run",
@@ -204,6 +207,7 @@ var targets = map[string]target{
 		pkg: "lesiw.io/strictvar",
 		src: "https://github.com/lesiw/strictvar",
 	},
+	"lesiw.io/subagent.txt": doc("subagent.txt"),
 	"lesiw.io/testcmp": &gopkg{
 		pkg: "lesiw.io/testcmp",
 		src: "https://github.com/lesiw/testcmp",

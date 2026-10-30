@@ -1,0 +1,14 @@
+# lesiw.io
+
+> Plain-text documents about reviewing code, working on Go, and running a
+> second agent. Written to be read whole, by a person or an agent.
+
+## Documents
+
+- [Review](https://lesiw.io/review.txt): What to look for in a change, at every
+  scale from a concept to a sentence, and the prose rules that go with it.
+- [Go](https://lesiw.io/go.txt): A procedure for driving Go code to a clean
+  state with lesiw.io/tools, then handing it to a reviewer.
+- [Subagent](https://lesiw.io/subagent.txt): How to run a second agent with no
+  shared context in a terminal multiplexer, and wait for it without guessing at
+  timings.
