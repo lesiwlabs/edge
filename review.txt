@@ -280,11 +280,13 @@ the indirection is worth the cost.
 Then the branch level: redundant && clauses, dead code paths, error handling
 for situations which are impossible by construction.
 
-Finally, code comments and documentation. Do not use comments to compensate for
-unclear code: rename, extract, or restructure before deciding one is necessary.
-A comment should only exist if it is public documentation, or if the code to
-which it refers cannot be made clearer. Comments should be complete sentences
-that end with a period.
+Finally, code comments, commit messages, and documentation. Consider each
+sentence individually. Is it necessary? If not, report it. If it is necessary,
+is it only because it is compensating for unclear code? Suggest clarifying the
+code and removing the sentence. Is the sentence using common, simple sentence
+structure and basic vocabulary? If not, suggest a simpler alternative.
+Uncommon or complex sentence structure makes prose burdensome to read and
+should only be employed for emphasis.
 
 Once the change has settled, return to the narrative laid out by the commit
 history. Is it self-contradictory? Is one commit a revert of another? Are the
