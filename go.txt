@@ -48,16 +48,16 @@ Line breaks should carry semantic meaning. Bin-packing is the neutral state.
         "pkg2",
     )
 
-Treat vet as the source of truth. Do not attempt to mechanical fixes or create
+Treat vet as the source of truth. Do not attempt mechanical fixes or create
 ad-hoc scripts to measure line lengths. If something could be mechanically
 fixed, it would already be part of the fix suite; assume that all remaining
-reports require manual judgement by default.
+reports require manual judgment by default.
 
 As you apply corrections, return to the beginning of this procedure. For
-example, after making manual fixes on vet findings, return to the format step,
-followed by the auto-fix step, followed only then by another vet. This is to
-reduce churn (for example, manually fixing things that would be mechanically
-fixed by another fmt or fix run).
+example, after making manual fixes to vet findings, return to the format step,
+then the auto-fix step, and only then another vet. This is to reduce churn (for
+example, manually fixing things that would be mechanically fixed by another fmt
+or fix run).
 
 Once you have passed the vet step, spin off a reviewer with no shared context.
 If you are an agent operating in a harness, create a subagent and prompt it
@@ -66,5 +66,5 @@ https://lesiw.io/subagent.txt describes how to create an ad-hoc one with tmux
 and pi, and how to wait for it without guessing at timings.
 
 If there are review findings, address them, and return to the beginning of the
-procedure - fmt, fix, vet, review. Continue until there are no more remaining
-findings from vet or the reviewer.
+procedure - fmt, fix, vet, review. Continue until vet and the reviewer report
+nothing further.
