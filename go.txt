@@ -14,6 +14,31 @@ Report on what's left.
 
 Systematically work through all vet failures until vet passes.
 
+Both commands hand their flags to the go command, so every analyzer can be
+run on its own, turned off, or configured by name. There is no separate
+vocabulary to learn:
+
+    # Report on one analyzer.
+    go run lesiw.io/tools/cmd/vet@latest -stringsseq ./...
+
+    # Report on everything except one.
+    go run lesiw.io/tools/cmd/vet@latest -stringsseq=false ./...
+
+    # Set one of an analyzer's own flags.
+    go run lesiw.io/tools/cmd/vet@latest -linelen.len=100 ./...
+
+    # Apply one analyzer's fixes.
+    go run lesiw.io/tools/cmd/fix@latest -stringsseq ./...
+
+fix repeats until nothing is left, so the flags above select which analyzers
+it runs. A run that finds nothing says so.
+
+To turn an analyzer off for a whole project, put the flag in go.rc. Flags are
+configuration, and go.rc is where a project keeps its configuration:
+
+    vet go tool lesiw.io/tools/cmd/vet $GOARGS $GOFLAGS -someanalyzer=false
+    fix go tool lesiw.io/tools/cmd/fix $GOARGS $GOFLAGS -someanalyzer=false
+
 If long lines are reported, use that as a signal to restructure, not merely
 rewrite. The linelen analyzer is there to force you to reconsider whether a
 line is doing too much, is too complex, or is merely too hard to read.
