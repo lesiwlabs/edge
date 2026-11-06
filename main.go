@@ -16,6 +16,10 @@ var targets = map[string]target{
 	"chrislesiw.com":        url("https://www.linkedin.com/in/christopher-lesiw/"),
 	"chrislesiw.com/github": url("https://github.com/lesiw"),
 
+	"lesiw.io/bookends": &gopkg{
+		pkg: "lesiw.io/bookends",
+		src: "https://github.com/lesiw/bookends",
+	},
 	"lesiw.io/boolset": &gopkg{
 		pkg: "lesiw.io/boolset",
 		src: "https://github.com/lesiw/boolset",
