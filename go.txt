@@ -1,10 +1,6 @@
 Use lesiw.io/tools to automatically fix and report on issues.
 
-Begin by formatting the code.
-
-    go run lesiw.io/tools/cmd/fmt@latest ./...
-
-Then automatically apply fixes.
+Begin by applying fixes.
 
     go run lesiw.io/tools/cmd/fix@latest ./...
 
@@ -79,10 +75,9 @@ fixed, it would already be part of the fix suite; assume that all remaining
 reports require manual judgment by default.
 
 As you apply corrections, return to the beginning of this procedure. For
-example, after making manual fixes to vet findings, return to the format step,
-then the auto-fix step, and only then another vet. This is to reduce churn (for
-example, manually fixing things that would be mechanically fixed by another fmt
-or fix run).
+example, after making manual fixes to vet findings, return to the fix step, and
+only then to another vet. This is to reduce churn (for example, manually fixing
+things that would be mechanically fixed by another fix run).
 
 Once you have passed the vet step, spin off a reviewer with no shared context.
 If you are an agent operating in a harness, create a subagent and prompt it
@@ -91,5 +86,5 @@ https://lesiw.io/subagent.txt describes how to create an ad-hoc one with tmux
 and pi, and how to wait for it without guessing at timings.
 
 If there are review findings, address them, and return to the beginning of the
-procedure - fmt, fix, vet, review. Continue until vet and the reviewer report
+procedure - fix, vet, review. Continue until vet and the reviewer report
 nothing further.
